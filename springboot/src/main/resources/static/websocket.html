@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+<title>Insert title here</title>
+</head>
+
+<script type="text/javascript">
+   var websocket;
+   
+   function conn(){
+	   var id=sname.value;
+	   websocket=new WebSocket("ws://localhost:8080/websocket/"+id);
+	   
+	   websocket.onopen=function(event){
+		   alert("connection success");
+		   console.info(event);
+	   }
+	   
+	   websocket.onmessage=function(event){
+		   console.info(event);
+		   alert(event.data);
+	   }
+	   
+	   websocket.onclose = function(evt) {
+		   console.log("Connection closed.");
+	   } 
+   }
+   
+   function closeWebSocket(){
+	   
+   }
+   
+   function send(){
+	   var msg=content.value;
+	   console.info(msg);
+	   var id=tname.value;
+	   websocket.send(id+":"+msg);
+   }
+   
+</script>
+<body>
+
+发送者: <input id="sname"><br>
+接收者: <input id="tname"><br>
+内容:<input id="content"><br>
+<button onclick="conn()">连接</button><br>
+<button onclick="send()">发送</button>
+</body>
+</html>
